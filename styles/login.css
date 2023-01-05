@@ -23,7 +23,7 @@ body {
   justify-content: center;
   flex-direction: column;
 }
-#signup-form {
+#login-form {
   width: 450px;
   display: flex;
   align-items: center;
@@ -33,7 +33,7 @@ body {
 .formContainer > h1 {
   color: #5984b4;
 }
-#signup-form > button {
+#login-form > button {
   margin: 20px;
   margin-top: 40px;
   padding: 8px;
@@ -46,7 +46,21 @@ body {
   color: white;
 }
 @media screen and (max-width: 610px) {
+  /* body {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+  } */
   .blueCard {
     display: none;
+  }
+  body {
+    width: 100%;
+  }
+  #login-form {
+    width: 350px;
+  }
+  .formContainer {
+    width: 100%;
   }
 }

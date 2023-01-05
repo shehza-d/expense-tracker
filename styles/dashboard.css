@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  display: flex;
+  height: 100vh;
+}
+
+.section1 {
+ padding: 35px;
+ padding-top: 75px;
+ padding-left: 55px;
+    border: 2px solid red;
+  width: 60%;
+  height: 100;
+}
