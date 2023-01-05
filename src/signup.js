@@ -6,9 +6,12 @@
 //   sendSignInLinkToEmail,
 //   onAuthStateChanged,
 // } from "firebase/auth"
-import {app} from "./firebase";
+
+// import {str} from './login.js'
+// console.log(str);
+import auth from "./firebase.js";
 // const auth = getAuth();
-   console.log(app); 
+   // console.log(app); 
 // try {
 //   const userCredential = await createUserWithEmailAndPassword(
 //     auth,
