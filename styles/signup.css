@@ -28,3 +28,9 @@ flex-direction: column;
 #signup-form{
     width: 450px;
 }
+@media screen and (max-width: 0px) {
+
+    .blueCard{
+        display: none;
+    }
+}
