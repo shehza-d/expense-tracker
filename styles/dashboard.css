@@ -8,10 +8,68 @@ body {
 }
 
 .section1 {
- padding: 35px;
- padding-top: 75px;
- padding-left: 55px;
-    border: 2px solid red;
+  padding: 35px;
+  padding-top: 75px;
+  padding-left: 55px;
+  /* border: 2px solid red; */
   width: 60%;
   height: 100;
+}
+.seletCategoryDiv {
+  display: flex;
+}
+.category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.circle {
+  width: 50px;
+  height: 50px;
+  background-color: rgb(155, 154, 154);
+  border-radius: 50px;
+}
+.addBtn {
+  width: 200px;
+  height: 50px;
+}
+.redd {
+  color: red;
+}
+.greenn {
+  color: green;
+}
+
+.section2 {
+  margin: 30px;
+  padding: 20px;
+  margin-right: 50px;
+  width: 40%;
+  background-color: rgb(228, 225, 225);
+  border: 2px solid rebeccapurple;
+  border-radius: 15px;
+}
+.userIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(155, 154, 154);
+  border-radius: 50px;
+  color: black;
+  /* size: 60px; */
+  margin: 15px;
+}
+.userIcon > svg {
+  height: 50px;
+  size: 100px;
+}
+/* .section2>h5{
+
+} */
+.section2 > h2 {
+  color: #5984b4;
 }
