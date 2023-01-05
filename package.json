@@ -1,0 +1,23 @@
+{
+  "name": "expense-tracker",
+  "version": "1.0.0",
+  "description": "task",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shehza-d/Expense-Tracker.git"
+  },
+  "keywords": [
+    "html"
+  ],
+  "author": "shehzad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shehza-d/Expense-Tracker/issues"
+  },
+  "homepage": "https://github.com/shehza-d/Expense-Tracker#readme"
+}
