@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/shehza-d/Expense-Tracker/issues"
   },
-  "homepage": "https://github.com/shehza-d/Expense-Tracker#readme"
+  "homepage": "https://github.com/shehza-d/Expense-Tracker#readme",
+  "dependencies": {
+    "firebase": "^9.15.0"
+  }
 }

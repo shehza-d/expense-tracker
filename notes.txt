@@ -1,0 +1,3 @@
+how to identify which user is login
+database structure kese bane ga
+view all transaction ky liye puri history rakhni pere gyi

@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    display: flex;
+    height: 100vh;
+}
+.blueCard{
+    width: 40%;
+    color: white;
+    background-color: blue;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+
+}
+.formContainer{
+    width: 60%;
+    
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+
+}
+#signup-form{
+    width: 450px;
+}
