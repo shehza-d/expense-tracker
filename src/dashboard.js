@@ -1,3 +1,59 @@
+// let arrayOfTodos = JSON.parse(localStorage.getItem("expenseData")) || {};
+//
+// new logic
+// arrayOfTodos.push(todo);
+// localStorage.setItem("todoList", JSON.stringify(arrayOfTodos));
+
+// document.querySelector("#todoList").innerHTML = ``;
+// document.querySelector("#todoItem").value = ``;
+// refresh();
+
+//
+// let data.totalAmount = 0;
+
+const data = {
+  userName: "Shehzad",
+  totalAmount: 0,
+  accounts: { cash: 0, bank: 0, saving: 0 },
+};
+
+// document.querySelector("#amountValue").innerHTML = data.totalAmount; ///////
+
+const transaction = () => {
+  const inputValuee = Number(document.querySelector("#inputAmount").value);
+
+  const select = document.querySelector("#typeSelect").value;
+  if (select === "cash") {
+    data.accounts.cash += inputValuee;
+  } else if (select === "saving") {
+    data.accounts.saving += inputValuee;
+  } else if (select === "bank") {
+    data.accounts.bank += inputValuee;
+  } else {
+    alert("please select another account");
+  }
+  data.totalAmount = data.accounts.cash + data.accounts.saving + data.accounts.bank;
+  rerendering();
+  console.log(data); ///////
+};
+
+document.querySelector("#expenseBtn").addEventListener("click", () => {
+  data.totalAmount -= Number(document.querySelector("#inputAmount").value);
+  document.querySelector("#amountValue").innerHTML = data.totalAmount;
+});
+
+document.querySelector("#incomeBtn").addEventListener("click", transaction);
+
+//re-rendering to update data
+const rerendering = () => {
+  document.querySelector("#cashAmountSpan").innerHTML = data.accounts.cash;
+  document.querySelector("#savingAmountSpan").innerHTML = data.accounts.saving;
+  document.querySelector("#bankAmountSpan").innerHTML = data.accounts.bank;
+
+  document.querySelector("#amountValue").innerHTML = data.totalAmount;
+};
+rerendering();
+
 // Import the functions you need from the SDKs you need
 // import { db } from "../../firebase";
 
@@ -11,23 +67,6 @@
 
 //   // console.log('ru',userName,userPassword);
 // });
-let mainAmount = 0;
-document.querySelector("#amountValue").innerHTML = mainAmount;
-
-const transaction = () => {
-  mainAmount += Number(document.querySelector("#inputAmount").value);
-  document.querySelector("#amountValue").innerHTML = mainAmount;
-
-  const select = document.querySelector("#typeSelect").value;
-  console.log(select);
-};
-
-document.querySelector("#expenseBtn").addEventListener("click", () => {
-  mainAmount -= Number(document.querySelector("#inputAmount").value);
-  document.querySelector("#amountValue").innerHTML = mainAmount;
-});
-
-document.querySelector("#incomeBtn").addEventListener("click", transaction);
 // let unsubscribe;
 // (() => {
 //   const q = query(
