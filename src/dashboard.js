@@ -3,8 +3,6 @@
 
 // import { doc } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
 
-
-
 // document.querySelector("#signup-form").addEventListener("submit", (e) => {
 //   e.preventDefault();
 
@@ -13,41 +11,23 @@
 
 //   // console.log('ru',userName,userPassword);
 // });
+let mainAmount = 0;
+document.querySelector("#amountValue").innerHTML = mainAmount;
 
+const transaction = () => {
+  mainAmount += Number(document.querySelector("#inputAmount").value);
+  document.querySelector("#amountValue").innerHTML = mainAmount;
 
-function transaction(){
-  console.log("hello");
-}
+  const select = document.querySelector("#typeSelect").value;
+  console.log(select);
+};
 
+document.querySelector("#expenseBtn").addEventListener("click", () => {
+  mainAmount -= Number(document.querySelector("#inputAmount").value);
+  document.querySelector("#amountValue").innerHTML = mainAmount;
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+document.querySelector("#incomeBtn").addEventListener("click", transaction);
 // let unsubscribe;
 // (() => {
 //   const q = query(
