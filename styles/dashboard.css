@@ -89,3 +89,10 @@ body {
 #accountTransactions > tbody {
   border-bottom: 1px solid rgb(190, 186, 186);
 }
+
+.addMoreBtn{
+  background-color: transparent;
+  border: 0.4px solid;
+  padding: 5px;
+  border-radius: 10px;
+}

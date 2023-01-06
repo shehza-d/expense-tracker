@@ -3,6 +3,48 @@ import { db } from "../../firebase";
 
 import { doc } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
 
+
+
+document.querySelector("#signup-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const userName = document.querySelector("#signup-user-email").value;
+  const userPassword = document.querySelector("#signup-user-password").value;
+
+  // console.log('ru',userName,userPassword);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let unsubscribe;
 (() => {
   const q = query(

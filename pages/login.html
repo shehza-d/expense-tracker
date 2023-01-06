@@ -26,7 +26,7 @@
     <form id="login-form">
     
       <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="login-user-email" placeholder="name@example.com" />
+        <input type="email" class="form-control" id="login-user-email" placeholder="name@example.com" required/>
         <label for="floatingInput">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope"
             viewBox="0 0 16 16">
@@ -38,7 +38,7 @@
       </div>
       <div class="form-floating">
         <!-- <span class="input-group-text" id="basic-addon1">@</span> -->
-        <input type="password" class="form-control" id="login-user-password" placeholder="Password" />
+        <input type="password" class="form-control" id="login-user-password" placeholder="Password" required/>
         <label for="floatingPassword">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock"
             viewBox="0 0 16 16">
@@ -48,7 +48,7 @@
           &nbsp;&nbsp;Password</label>
         <!-- onclick="login()" -->
       </div>
-      <button type="submit" id="login-submit">SIGN UP</button>
+      <button onclick="(()=>window.location.href=`./dashboard.html`)();"  type="submit" id="login-submit">LOG IN</button>
     </form>
 
     <p>Don't have an account? &nbsp; <a href="./signup.html">Signup Here</a></p>

@@ -28,8 +28,23 @@ const firebaseConfig = {
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-export const db = firebaseApp.firestore();
-export const auth = firebase.auth();
+// export const db = firebaseApp.firestore();
+// export 
+const auth = firebase.auth();
+
+try {
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    "mail@test.com",
+    "password"
+  );
+  // Signed in
+  const user = userCredential.user;
+} catch (err) {
+  console.log(err);
+  const errorCode = err.code;
+  const errorMessage = err.message;
+}
 // Initialize Firebase
 // const app = initializeApp(firebaseConfig);
 

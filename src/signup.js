@@ -9,7 +9,7 @@
 
 // import {str} from './login.js'
 // console.log(str);
-import auth from "./firebase.js";
+// import auth from "./firebase.js";
 // const auth = getAuth();
    // console.log(app); 
 // try {
@@ -23,6 +23,10 @@ import auth from "./firebase.js";
 // } catch (err) {
 //   const errorCode = err.code;
 //   const errorMessage = err.message;
+// }
+
+// const redirectFun=()=>{
+//    console.log('he');
 // }
 // document.querySelector("#signup-form").addEventListener("submit", (e) => {
 //   e.preventDefault();

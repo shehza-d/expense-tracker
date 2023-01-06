@@ -21,11 +21,11 @@
   </div>
   <div class="formContainer">
     <h1>Create Account</h1>
-    <!-- Loading -->
-
-    <form id="signup-form">
+    <!-- window.location.href='./pages/login.html' -->
+    <!-- onsubmit="redirectFun(); return false" -->
+    <form id="signup-form" >
       <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingInput" placeholder="hh" />
+        <input type="text" class="form-control" id="floatingInput" placeholder="hh" required />
         <label for="floatingInput">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person"
             viewBox="0 0 16 16">
@@ -37,7 +37,7 @@
         </label>
       </div>
       <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="signup-user-email" placeholder="name@example.com" />
+        <input type="email" class="form-control" id="signup-user-email" placeholder="name@example.com" required />
         <label for="floatingInput">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope"
             viewBox="0 0 16 16">
@@ -49,7 +49,7 @@
       </div>
       <div class="form-floating">
         <!-- <span class="input-group-text" id="basic-addon1">@</span> -->
-        <input type="password" class="form-control" id="signup-user-password" placeholder="Password" />
+        <input type="password" class="form-control" id="signup-user-password" placeholder="Password" required />
         <label for="floatingPassword">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock"
             viewBox="0 0 16 16">
@@ -59,7 +59,8 @@
           &nbsp;&nbsp;Password</label>
         <!-- onclick="signUp()" -->
       </div>
-      <button type="submit" id="signup-submit">SIGN UP</button>
+
+      <button onclick="window.location.href=`./login.html`" type="submit" id="signup-submit">SIGN UP</button>
     </form>
 
 
@@ -69,7 +70,6 @@
     <!-- <span></span> -->
 
   </div>
-
 
   <script type="module" src="../src/signup.js"></script>
   <!-- bootstrap cdn -->
