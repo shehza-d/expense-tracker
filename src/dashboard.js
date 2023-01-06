@@ -1,22 +1,17 @@
-// let arrayOfTodos = JSON.parse(localStorage.getItem("expenseData")) || {};
-//
-// new logic
-// arrayOfTodos.push(todo);
-// localStorage.setItem("todoList", JSON.stringify(arrayOfTodos));
-
-// document.querySelector("#todoList").innerHTML = ``;
-// document.querySelector("#todoItem").value = ``;
-// refresh();
-
-//
-// let data.totalAmount = 0;
-
-const data = {
+let data = JSON.parse(localStorage.getItem("expenseData")) || {
   userName: "Shehzad",
   totalAmount: 0,
   accounts: { cash: 0, bank: 0, saving: 0 },
 };
+//
+// new logic
+// arrayOfTodos.push(todo);
+// localStorage.setItem("expenseData", JSON.stringify(data));
 
+// document.querySelector("#todoList").innerHTML = ``;
+// document.querySelector("#todoItem").value = ``;
+
+// let data.totalAmount = 0;
 // document.querySelector("#amountValue").innerHTML = data.totalAmount; ///////
 
 const transaction = () => {
@@ -32,14 +27,20 @@ const transaction = () => {
   } else {
     alert("please select another account");
   }
-  data.totalAmount = data.accounts.cash + data.accounts.saving + data.accounts.bank;
+  data.totalAmount =
+    data.accounts.cash + data.accounts.saving + data.accounts.bank;
+  localStorage.setItem("expenseData", JSON.stringify(data));///
   rerendering();
   console.log(data); ///////
+  
 };
 
 document.querySelector("#expenseBtn").addEventListener("click", () => {
   data.totalAmount -= Number(document.querySelector("#inputAmount").value);
   document.querySelector("#amountValue").innerHTML = data.totalAmount;
+  
+  localStorage.setItem("expenseData", JSON.stringify(data));///
+  rerendering();/////
 });
 
 document.querySelector("#incomeBtn").addEventListener("click", transaction);
