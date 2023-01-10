@@ -27,30 +27,45 @@ const savePost = async () => {
   try {
     await onAuthStateChanged(auth, async (user) => {
       // to find the ID of Logged in user
-      console.log(user);
-      await setDoc(doc(db, user.uid, "savings"), {
-        accountName: "sadaPay",
+      // console.log(user);
+      await setDoc(doc(db, user.uid, "cash"), {
         amount: 0,
         createdOn: serverTimestamp(),
       });
-      // await addDoc(collection(db, user.uid), {
-      //     accountName: "sadaPay",
-      //     createdOn: serverTimestamp(),
-      //   });
+
+      await setDoc(doc(db, user.uid, "savings"), {
+        amount: 0,
+        createdOn: serverTimestamp(),
+      });
+
+      await setDoc(doc(db, user.uid, "transactionsHistory"), {
+        amount: 0,
+        createdOn: serverTimestamp(),
+      });
+
+
+
+
+
+
+
+      // await addDoc(collection(db, user.uid), {dataObj });
     });
   } catch (e) {
     console.error("Error adding document: ", e);
   }
 };
 savePost();
-// document.querySelector("#signup-form").addEventListener("submit", (e) => {
-//   e.preventDefault();
 
-//   const userName = document.querySelector("#signup-user-email").value;
-//   const userPassword = document.querySelector("#signup-user-password").value;
 
-//   // console.log('ru',userName,userPassword);
-// });
+
+
+
+
+
+
+
+
 // let unsubscribe;
 // (() => {
 //   const q = query(
