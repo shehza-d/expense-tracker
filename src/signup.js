@@ -1,38 +1,41 @@
-//createUser
-// import {
-//   getAuth,
-//   createUserWithEmailAndPassword,
-//   signInWithEmailAndPassword,
-//   sendSignInLinkToEmail,
-//   onAuthStateChanged,
-// } from "firebase/auth"
+import { auth } from "./firebase.js";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 
-// import {str} from './login.js'
-// console.log(str);
-// import auth from "./firebase.js";
-// const auth = getAuth();
-   // console.log(app); 
-// try {
-//   const userCredential = await createUserWithEmailAndPassword(
-//     auth,
-//     "mail@test.com",
-//     "password"
-//   );
-//   // Signed in
-//   const user = userCredential.user;
-// } catch (err) {
-//   const errorCode = err.code;
-//   const errorMessage = err.message;
-// }
+const createUserFun = async (userEmail, userPassword) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      userEmail,
+      userPassword
+    );
+    userAuthState();
+  } catch (err) {
+    console.log(err.message);  }
+};
 
-// const redirectFun=()=>{
-//    console.log('he');
-// }
-// document.querySelector("#signup-form").addEventListener("submit", (e) => {
-//   e.preventDefault();
+const userAuthState = () => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log(user);
+      window.location.href=`./dashboard.html`
+      // const uid = user.uid;
+    } else {
+      console.log("User is signed out");
+    }
+  });
+};
+userAuthState();
 
-//   const userName = document.querySelector("#signup-user-email").value;
-//   const userPassword = document.querySelector("#signup-user-password").value;
+document.querySelector("#signup-form").addEventListener("submit", (e) => {
+  e.preventDefault();
 
-//   // console.log('ru',userName,userPassword);
-// });
+  const userEmail = document.querySelector("#signupUserEmail").value;
+  const userPassword = document.querySelector("#signupUserPassword").value;
+
+  createUserFun(userEmail, userPassword);
+});
+
+// displayName
