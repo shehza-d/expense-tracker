@@ -5,7 +5,6 @@ import {
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 
-// (()=>window.location.href=`./dashboard.html`)();
 (() => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -25,8 +24,7 @@ const logInFun = async (userEmail, userPassword) => {
       userEmail,
       userPassword
     );
-      console.log(user);
-    // ...
+    console.log(user);
   } catch (err) {
     console.log(err.code);
   }

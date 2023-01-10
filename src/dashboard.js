@@ -1,29 +1,48 @@
 import { auth } from "./firebase.js";
+import { db } from "./firebase.js";
+
 import {
   signOut,
   onAuthStateChanged,
-} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+  getAuth,
+} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"; //CDN
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  onSnapshot,
+  query,
+  serverTimestamp,
+  orderBy,
+  setDoc,
+  deleteDoc,
+  where,
+  updateDoc,
+  limit,
+} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"; //CDN
 
-// import {
-//   getFirestore,
-//   collection,
-//   addDoc,
-//   getDocs,
-//   doc,
-//   onSnapshot,
-//   query,
-//   serverTimestamp,
-//   orderBy,
-//   deleteDoc,
-//   updateDoc,
-//   limit,
-// } from "firebase/firestore";
-
-// Import the functions you need from the SDKs you need
-// import { db } from "../../firebase";
-
-// import { doc } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
-
+const savePost = async () => {
+  try {
+    await onAuthStateChanged(auth, async (user) => {
+      // to find the ID of Logged in user
+      console.log(user);
+      await setDoc(doc(db, user.uid, "savings"), {
+        accountName: "sadaPay",
+        amount: 0,
+        createdOn: serverTimestamp(),
+      });
+      // await addDoc(collection(db, user.uid), {
+      //     accountName: "sadaPay",
+      //     createdOn: serverTimestamp(),
+      //   });
+    });
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
+savePost();
 // document.querySelector("#signup-form").addEventListener("submit", (e) => {
 //   e.preventDefault();
 
@@ -170,12 +189,11 @@ document.querySelector("#logOutBtn").addEventListener("click", async () => {
     }
   }
 });
-const userAuthState = () => {
-  onAuthStateChanged(auth, (user) => {
+const userAuthState = async () => {
+  await onAuthStateChanged(auth, (user) => {
     if (user) {
-      // window.location.href = "./dashboard.html";
-      console.log(user);
-      // const uid = user.uid;
+      // console.log(user);
+      // console.log(user.uid);
     } else {
       window.location.href = "./login.html";
       console.log("User is signed out");
@@ -183,3 +201,7 @@ const userAuthState = () => {
   });
 };
 userAuthState();
+
+/*
+notes
+we should make our collection large and document small in order to make for efficent qurrys*/

@@ -1,12 +1,10 @@
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 
 import { auth } from "./firebase.js";
+
 console.log("checking authentication");
-
-
-setTimeout(userAuthState, 1000);
 const userAuthState = () => {
-  onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
     if (user) {
       window.location.href = "./pages/dashboard.html";
       console.log(user);
@@ -15,8 +13,31 @@ const userAuthState = () => {
       window.location.href = "./pages/login.html";
       console.log("User is signed out");
     }
-  });
+});
 };
+setTimeout(userAuthState, 1600);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //  signInBtn.onclick = () => auth.signInWithPopup(provider);
 
@@ -73,9 +94,3 @@ const userAuthState = () => {
 //          unsubscribe && unsubscribe();
 //      }
 //  });
-
-//  const loderFun=()=>{
-//  let loader = document.getElementById("loader")
-//  // prof.style.display="block"
-//  loader.style.display="none"
-//  }
