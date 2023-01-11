@@ -24,13 +24,14 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"; //CDN
 
 // const savePost =
+// to remove and put in signup
 (async () => {
   try {
     await onAuthStateChanged(auth, async (user) => {
       // to find the ID of Logged in user
       // console.log(user);
       await setDoc(doc(db, user.uid, "cash"), {
-        amount: 0,
+        // amount: 0,
         category: "default",
         createdOn: serverTimestamp(),
       });
@@ -56,22 +57,6 @@ import {
 })();
 // savePost();
 
-// getDocs(colRef) //this is not real time
-//   .then((myDataSnapShot) => {
-//     // console.log(myDataSnapShot.docs)
-//     let myData = [];
-//     myDataSnapShot.docs.forEach((doc) => {
-//       myData.push({ ...doc.data(), id: doc.id });
-//     });
-//     console.log(myData);
-//   })
-//   .catch((err) => {
-//     console.log(err.message);
-//   });
-//         getDoc(docRef) //not real time//not recommended
-//   .then((doc) => {
-//     console.log(doc.data(), doc.id);
-//   });
 const transactionFun = async () => {
   let inputValue1 = Number(document.querySelector("#inputAmount").value);
 
@@ -80,8 +65,7 @@ const transactionFun = async () => {
   try {
     await onAuthStateChanged(auth, async (user) => {
       const data1 = await getDoc(doc(db, user.uid, selectedAccount));
-      inputValue1 += data1.data().amount;
-
+      if (data1.data().amount) inputValue1 += data1.data().amount;
       await updateDoc(doc(db, user.uid, selectedAccount), {
         amount: inputValue1,
       });
@@ -101,6 +85,8 @@ document.querySelector("#expenseBtn").addEventListener("click", () => {
 
 document.querySelector("#incomeBtn").addEventListener("click", transactionFun);
 
+// collection("jqHzNEBa5XYrz8ZGChwllO0iB4a2")
+// .orderBy("amount", "asc")
 //createNewAccount
 document
   .querySelector("#createNewAccountForm")

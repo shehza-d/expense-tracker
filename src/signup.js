@@ -15,6 +15,8 @@ const createUserFun = async (userEmail, userPassword,userName) => {
     );
     await updateProfile(auth.currentUser, { displayName: userName })
     userAuthState();
+
+    //this will run 1 time so create accoutns here
   } catch (err) {
     console.log(err.message);
   }
