@@ -190,7 +190,7 @@
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="accountNames">
           <tr>
             <td>Cash</td>
             <td>PRK <span id="cashAmountSpan"></span></td>
@@ -199,10 +199,10 @@
             <td>Saving</td>
             <td>PRK <span id="savingAmountSpan"></span></td>
           </tr>
-          <tr>
+          <!-- <tr>
             <td>Meezan Bank</td>
             <td>PKR <span id=""></span></td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
@@ -221,25 +221,27 @@
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Create new Account</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <p class="text-center">More account to manage more explicitly</p>
-            <div class="modal-body">
-              <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="" placeholder="account name">
-                <label for="floatingInput">Enter your account name</label>
+            <form id="createNewAccountForm">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create new Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div class="form-floating">
-                <input type="number" class="form-control" id="transactionAmount" placeholder="amount">
-                <label for="floatingPassword">Enter Amount</label>
+              <p class="text-center">More account to manage more explicitly</p>
+              <div class="modal-body">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="newAccountName" placeholder="account name" required>
+                  <label for="floatingInput">Enter your account name</label>
+                </div>
+                <div class="form-floating">
+                  <input type="number" class="form-control" id="newAccountAmount" placeholder="amount" required>
+                  <label for="floatingPassword">Enter Amount</label>
+                </div>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="button" class="btn btn-primary">Create Account</button>
-            </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" id="makeAccBtn" class="btn btn-primary">Create Account</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

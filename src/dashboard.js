@@ -54,7 +54,7 @@ import {
 })();
 // savePost();
 
-const addAmountFun = () => {};
+// const addAmountFun = () => {};
 
 const transactionFun = async () => {
   const inputValuee = Number(document.querySelector("#inputAmount").value);
@@ -71,12 +71,11 @@ const transactionFun = async () => {
     console.error("Error adding document: ", e);
   }
 
-  // data.totalAmount =
-
   // rerendering();
   // console.log(data); ///////
 };
 // transactionFun()
+
 // document.querySelector("#expenseBtn").addEventListener("click", () => {
 //   data.totalAmount -= Number(document.querySelector("#inputAmount").value);
 //   document.querySelector("#amountValue").innerHTML = data.totalAmount;
@@ -87,47 +86,27 @@ const transactionFun = async () => {
 
 document.querySelector("#incomeBtn").addEventListener("click", transactionFun);
 
-// (() => {
-//   const q = query(
-//     collection(db, "posts"),
-//     orderBy("createdOn", "desc"),
-//     limit(60)
-//   );
-//     onSnapshot(q, (querySnapshot) => {
-//     const posts = [];
-//     querySnapshot.forEach((doc) => {
-//       posts.push({ id: doc.id, ...doc.data() });
-//       // console.log({ id: doc.id, ...doc.data() })
-//     });
-//     setPosts(posts);
-//     console.log("posts", posts);
-//   });
-// })();
+document
+  .querySelector("#createNewAccountForm")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const newAccountName = document.querySelector("#newAccountName").value;
+    const newAccountAmount = Number(
+      document.querySelector("#newAccountAmount").value
+    );
 
-// //
-// try {
-//   const docRef = await addDoc(collection(db, "posts"), {
-//     text: postText,
-//     createdOn: serverTimestamp(),
-//   });
-//   // console.log("Document written with ID: ", docRef.id);
-// } catch (e) {
-//   console.error("Error adding document: ", e);
-// }
-// //
-
-// const updatePost = async (e) => {
-//   setDropDown(false);
-//   e.preventDefault();
-//   await updateDoc(doc(db, "posts", editing.editingId), {
-//     text: editing.editingText,
-//   });
-//   setEditing({
-//     editingId: null,
-//     editingText: "",
-//   });
-//   setDropDown(false);
-// };
+    try {
+      await onAuthStateChanged(auth, async (user) => {
+        await setDoc(doc(db, user.uid, newAccountName), {
+          amount: newAccountAmount,
+          category: "default",
+          createdOn: serverTimestamp(),
+        });
+      });
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  });
 
 // $$$$$$$$$$$$$$$$$$$$$$$$$- Local Storage Approach -$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
