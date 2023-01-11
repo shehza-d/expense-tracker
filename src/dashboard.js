@@ -10,6 +10,7 @@ import {
   collection,
   addDoc,
   getDocs,
+  getDoc,
   doc,
   onSnapshot,
   query,
@@ -41,6 +42,7 @@ import {
       });
 
       await setDoc(doc(db, user.uid, "transactionsHistory"), {
+        userName: user.displayName,
         amount: 0,
         category: "default",
         createdOn: serverTimestamp(),
@@ -54,17 +56,34 @@ import {
 })();
 // savePost();
 
-// const addAmountFun = () => {};
-
+// getDocs(colRef) //this is not real time
+//   .then((myDataSnapShot) => {
+//     // console.log(myDataSnapShot.docs)
+//     let myData = [];
+//     myDataSnapShot.docs.forEach((doc) => {
+//       myData.push({ ...doc.data(), id: doc.id });
+//     });
+//     console.log(myData);
+//   })
+//   .catch((err) => {
+//     console.log(err.message);
+//   });
+//         getDoc(docRef) //not real time//not recommended
+//   .then((doc) => {
+//     console.log(doc.data(), doc.id);
+//   });
 const transactionFun = async () => {
-  const inputValuee = Number(document.querySelector("#inputAmount").value);
+  let inputValue1 = Number(document.querySelector("#inputAmount").value);
 
   const selectedAccount = document.querySelector("#typeSelect").value;
   if (selectedAccount === "none") return alert("please select another account");
   try {
     await onAuthStateChanged(auth, async (user) => {
+      const data1 = await getDoc(doc(db, user.uid, selectedAccount));
+      inputValue1 += data1.data().amount;
+
       await updateDoc(doc(db, user.uid, selectedAccount), {
-        amount: inputValuee,
+        amount: inputValue1,
       });
     });
   } catch (e) {
@@ -76,16 +95,13 @@ const transactionFun = async () => {
 };
 // transactionFun()
 
-// document.querySelector("#expenseBtn").addEventListener("click", () => {
-//   data.totalAmount -= Number(document.querySelector("#inputAmount").value);
-//   document.querySelector("#amountValue").innerHTML = data.totalAmount;
-
-//   localStorage.setItem("expenseData", JSON.stringify(data)); ///
-//   rerendering(); /////
-// });
+document.querySelector("#expenseBtn").addEventListener("click", () => {
+  rerendering(); /////
+});
 
 document.querySelector("#incomeBtn").addEventListener("click", transactionFun);
 
+//createNewAccount
 document
   .querySelector("#createNewAccountForm")
   .addEventListener("submit", async (e) => {
@@ -149,13 +165,13 @@ document
 // $$$$$$$$$$$$$$$$$$$$$$$$$- Local Storage Approach -$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 //re-rendering to update data
-const rerendering = () => {
-  // document.querySelector("#cashAmountSpan").innerHTML = data.accounts.cash;
-  // document.querySelector("#savingAmountSpan").innerHTML = data.accounts.saving;
-  // document.querySelector("#bankAmountSpan").innerHTML = data.accounts.bank;
-  // document.querySelector("#amountValue").innerHTML = data.totalAmount;
-};
-rerendering();
+// const rerendering = () => {
+// document.querySelector("#cashAmountSpan").innerHTML = data.accounts.cash;
+// document.querySelector("#savingAmountSpan").innerHTML = data.accounts.saving;
+// document.querySelector("#bankAmountSpan").innerHTML = data.accounts.bank;
+// document.querySelector("#amountValue").innerHTML = data.totalAmount;
+// };
+// rerendering();
 
 //LOG-OUT System
 document.querySelector("#logOutBtn").addEventListener("click", async () => {
@@ -178,7 +194,7 @@ document.querySelector("#logOutBtn").addEventListener("click", async () => {
 const userAuthState = async () => {
   await onAuthStateChanged(auth, (user) => {
     if (user) {
-      // console.log(user);user.uid
+      // console.log(user);//user.uid
     } else {
       window.location.href = "./login.html";
       console.log("User is signed out");
