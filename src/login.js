@@ -7,13 +7,8 @@ import {
 
 (() => {
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log(user);
-      window.location.href = `./dashboard.html`;
-      // const uid = user.uid;
-    } else {
-      console.log("User is signed out");
-    }
+    if (user) window.location.href = `./dashboard.html`;
+    else console.log("User is signed out");
   });
 })();
 
@@ -24,9 +19,10 @@ const logInFun = async (userEmail, userPassword) => {
       userEmail,
       userPassword
     );
-    console.log(user);
+    // console.log(user);
   } catch (err) {
-    console.log(err.code);
+    console.log(err);
+    alert(err.code)
   }
 };
 

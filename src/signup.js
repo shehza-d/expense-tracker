@@ -52,22 +52,18 @@ const createUserFun = async (userEmail, userPassword, userName) => {
     userAuthState();
   } catch (err) {
     console.log(err);
+    alert(err.code);
   }
 };
 
 const userAuthState = () => {
   //redirect user based on auth state
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log(user);
-      window.location.href = `./dashboard.html`;
-      // const uid = user.uid;
-    } else {
-      console.log("User is signed out");
-    }
+    if (user) window.location.href = `./dashboard.html`;
+    else console.log("User is signed out");
   });
 };
-userAuthState();//this is not working 
+// userAuthState(); //this is not working
 
 document.querySelector("#signup-form").addEventListener("submit", (e) => {
   e.preventDefault();

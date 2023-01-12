@@ -6,21 +6,13 @@ import {
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"; //CDN
 import {
-  getFirestore,
   collection,
-  addDoc,
-  getDocs,
   getDoc,
   doc,
   onSnapshot,
-  query,
   serverTimestamp,
-  orderBy,
   setDoc,
-  deleteDoc,
-  where,
   updateDoc,
-  limit,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"; //CDN
 
 (async () => {
@@ -32,18 +24,14 @@ import {
       myDataSnapShot.docs.forEach((doc) =>
         userAccData.push({ ...doc.data(), id: doc.id })
       );
-      console.log(userAccData);
       let totalAmount = 0;
-      console.log(totalAmount);
+      // console.log(totalAmount);
       userAccData?.forEach((item) => (totalAmount += item.amount));
       rerendering(totalAmount, userAccData);
     }
   );
   // .orderBy("amount", "asc")
-  //createNewAccount
 })();
-
-// console.log(userAccData.length);
 
 const transactionFun = async () => {
   let inputValue1 = Number(document.querySelector("#inputAmount").value);
@@ -62,30 +50,26 @@ const transactionFun = async () => {
     console.error("Error adding document: ", e);
   }
   rerendering();
-  // console.log(data); ///////
 };
-// transactionFun()
 
-// document.querySelector("#expenseBtn").addEventListener("click", async () => {
-//   let inputValue1 = Number(document.querySelector("#inputAmount").value);
+document.querySelector("#expenseBtn").addEventListener("click", async () => {
+  let inputValue1 = Number(document.querySelector("#inputAmount").value);
 
-//   const selectedAccount = document.querySelector("#typeSelect").value;
-//   if (selectedAccount === "none") return alert("please select another account");
-//   try {
-//     await onAuthStateChanged(auth, async (user) => {
-//       const data1 = await getDoc(doc(db, user.uid, selectedAccount));
-//       if (data1.data().amount < inputValue1) console.log("no money");
-//       if (data1.data().amount) inputValue1 -= data1.data().amount;
-//       await updateDoc(doc(db, user.uid, selectedAccount), {
-//         amount: inputValue1,
-//       });
-//     });
-//   } catch (e) {
-//     console.error("Error adding document: ", e);
-//   }
-
-//   // rerendering(); /////
-// });
+  const selectedAccount = document.querySelector("#typeSelect").value;
+  if (selectedAccount === "none") return alert("please select another account");
+  try {
+    await onAuthStateChanged(auth, async (user) => {
+      const data1 = await getDoc(doc(db, user.uid, selectedAccount));
+      if (data1.data().amount < inputValue1) return alert("Not enough money");
+      let newVal = (data1.data().amount -= inputValue1);
+      await updateDoc(doc(db, user.uid, selectedAccount), {
+        amount: newVal,
+      });
+    });
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+});
 
 document.querySelector("#incomeBtn").addEventListener("click", transactionFun);
 
@@ -153,7 +137,6 @@ document
 
 //re-rendering to update data
 const rerendering = (totalAmount, userAccData) => {
-  // let totalAmount;
   let cashAmo;
   let savingAmo;
   let bankAmo;
@@ -178,9 +161,8 @@ document.querySelector("#logOutBtn").addEventListener("click", async () => {
     try {
       const res = await signOut(auth);
       // Sign-out successful.
-      console.log(res);
+      // console.log(res);
     } catch (err) {
-      // An error happened.
       console.log(err);
       const errorCode = err.code;
       const errorMessage = err.message;
@@ -203,5 +185,5 @@ userAuthState();
 
 /*
 notes
-we should make our collection large and document small in order to make for efficent qurrys
+we should make our collection large and document small in order to make for efficient quires
 */
