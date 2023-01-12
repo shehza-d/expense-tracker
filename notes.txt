@@ -1,3 +1,8 @@
 how to identify which user is login
 database structure kese bane ga
 view all transaction ky liye puri history rakhni pere gyi
+signup line 66
+we should make our collection large and document small in order to make for efficient quires
+
+for history on ever transaction add detail on in transactionsHistory document
+show all accounts detail

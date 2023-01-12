@@ -95,6 +95,25 @@ document
     }
   });
 
+//re-rendering to update data
+const rerendering = (totalAmount, userAccData) => {
+  let cashAmo;
+  let savingAmo;
+  let bankAmo;
+
+  userAccData?.forEach((item) => {
+    if (item.id === "cash") cashAmo = item.amount;
+    if (item.id === "saving") savingAmo = item.amount;
+    if (item.id === "bank") bankAmo = item.amount;
+  });
+
+  document.querySelector("#amountValue").innerHTML = totalAmount || 0;
+  document.querySelector("#cashAmountSpan").innerHTML = cashAmo || 0;
+  document.querySelector("#savingAmountSpan").innerHTML = savingAmo || 0;
+  document.querySelector("#bankAmountSpan").innerHTML = bankAmo || 0;
+};
+rerendering();
+
 // $$$$$$$$$$$$$$$$$$$$$$$$$- Local Storage Approach -$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 // let data = JSON.parse(localStorage.getItem("expenseData")) || {
@@ -135,25 +154,6 @@ document
 
 // $$$$$$$$$$$$$$$$$$$$$$$$$- Local Storage Approach -$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-//re-rendering to update data
-const rerendering = (totalAmount, userAccData) => {
-  let cashAmo;
-  let savingAmo;
-  let bankAmo;
-
-  userAccData?.forEach((item) => {
-    if (item.id === "cash") cashAmo = item.amount;
-    if (item.id === "saving") savingAmo = item.amount;
-    if (item.id === "bank") bankAmo = item.amount;
-  });
-
-  document.querySelector("#amountValue").innerHTML = totalAmount || 0;
-  document.querySelector("#cashAmountSpan").innerHTML = cashAmo || 0;
-  document.querySelector("#savingAmountSpan").innerHTML = savingAmo || 0;
-  document.querySelector("#bankAmountSpan").innerHTML = bankAmo || 0;
-};
-rerendering();
-
 //LOG-OUT System
 document.querySelector("#logOutBtn").addEventListener("click", async () => {
   const res = confirm("Are you sure you wanna logOut");
@@ -182,8 +182,3 @@ const userAuthState = async () => {
   });
 };
 userAuthState();
-
-/*
-notes
-we should make our collection large and document small in order to make for efficient quires
-*/
