@@ -43,7 +43,7 @@ const createUserFun = async (userEmail, userPassword, userName) => {
     });
     await setDoc(doc(db, uid, "transactionsHistory"), {
       // userName: user.displayName,
-      amount: 0,
+      // amount: 0,
       category: "default",
       createdOn: serverTimestamp(),
     });
@@ -91,7 +91,7 @@ const createDefaultAccFun = async (uid) => {
 
     await setDoc(doc(db, uid, "transactionsHistory"), {
       // userName: user.displayName,
-      amount: 0,
+      // amount: 0,
       category: "default",
       createdOn: serverTimestamp(),
     });

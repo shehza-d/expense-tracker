@@ -17,19 +17,22 @@ import {
 
 (async () => {
   // get all collection data Realtime
-  await onSnapshot(
-    collection(db, "FbacSxZcnLSgJTqNzvXnNY2d2Xq1"),
-    (myDataSnapShot) => {
-      let userAccData = [];
-      myDataSnapShot.docs.forEach((doc) =>
-        userAccData.push({ ...doc.data(), id: doc.id })
-      );
-      let totalAmount = 0;
-      // console.log(totalAmount);
-      userAccData?.forEach((item) => (totalAmount += item.amount));
-      rerendering(totalAmount, userAccData);
-    }
-  );
+  try {
+    await onAuthStateChanged(auth, async (user) => {
+      await onSnapshot(collection(db, user.uid), (myDataSnapShot) => {
+        let userAccData = [];
+        myDataSnapShot.docs.forEach((doc) =>
+          userAccData.push({ ...doc.data(), id: doc.id })
+        );
+        let totalAmount = 0;
+        // console.log(totalAmount);
+        userAccData?.forEach((item) => (totalAmount += item.amount));
+        rerendering(totalAmount, userAccData);
+      });
+    });
+  } catch (err) {
+    console.log(err);
+  }
   // .orderBy("amount", "asc")
 })();
 
@@ -45,6 +48,9 @@ const transactionFun = async () => {
       await updateDoc(doc(db, user.uid, selectedAccount), {
         amount: inputValue1,
       });
+      // await updateDoc(doc(db, user.uid, "transactionsHistory"), {
+      //   title: {two:"updated title",one:"uyftf"},
+      // });
     });
   } catch (e) {
     console.error("Error adding document: ", e);
@@ -52,6 +58,7 @@ const transactionFun = async () => {
   rerendering();
 };
 
+document.querySelector("#incomeBtn").addEventListener("click", transactionFun);
 document.querySelector("#expenseBtn").addEventListener("click", async () => {
   let inputValue1 = Number(document.querySelector("#inputAmount").value);
 
@@ -70,8 +77,6 @@ document.querySelector("#expenseBtn").addEventListener("click", async () => {
     console.error("Error adding document: ", e);
   }
 });
-
-document.querySelector("#incomeBtn").addEventListener("click", transactionFun);
 
 document
   .querySelector("#createNewAccountForm")
