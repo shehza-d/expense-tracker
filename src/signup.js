@@ -91,7 +91,7 @@ const createDefaultAccFun = async (uid) => {
 
     await setDoc(doc(db, uid, "transactionsHistory"), {
       // userName: user.displayName,
-      // amount: 0,
+      history: [],
       category: "default",
       createdOn: serverTimestamp(),
     });

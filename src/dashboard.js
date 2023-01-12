@@ -9,6 +9,7 @@ import {
   collection,
   getDoc,
   doc,
+  addDoc,
   onSnapshot,
   serverTimestamp,
   setDoc,
@@ -36,47 +37,60 @@ import {
   // .orderBy("amount", "asc")
 })();
 
-const transactionFun = async () => {
-  let inputValue1 = Number(document.querySelector("#inputAmount").value);
+let transType = "income";
+// expense
+// income
+document
+  .querySelector("#transactionForm")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+    let inputValue1 = Number(document.querySelector("#inputAmount").value);
 
-  const selectedAccount = document.querySelector("#typeSelect").value;
-  if (selectedAccount === "none") return alert("please select another account");
-  try {
-    await onAuthStateChanged(auth, async (user) => {
-      const data1 = await getDoc(doc(db, user.uid, selectedAccount));
-      if (data1.data().amount) inputValue1 += data1.data().amount;
-      await updateDoc(doc(db, user.uid, selectedAccount), {
-        amount: inputValue1,
+    const selectedAccount = document.querySelector("#typeSelect").value;
+    if (selectedAccount === "none")
+      return alert("please select another account");
+    try {
+      await onAuthStateChanged(auth, async (user) => {
+        const data1 = await getDoc(doc(db, user.uid, selectedAccount));
+        if (transType === "income") {
+          if (data1.data().amount) inputValue1 += data1.data().amount;
+          await updateDoc(doc(db, user.uid, selectedAccount), {
+            amount: inputValue1,
+          });
+        } else if (transType === "expense") {
+          if (data1.data().amount < inputValue1)
+            return alert("Not enough money");
+          let newVal = (data1.data().amount -= inputValue1);
+          await updateDoc(doc(db, user.uid, selectedAccount), {
+            amount: newVal,
+          });
+        }
+        const data2 = await getDoc(doc(db, user.uid, "transactionsHistory"));
+        console.log(data2.data().history);
+
+        await updateDoc(doc(db, user.uid, "transactionsHistory"), {
+          history: [
+            ...data2.data().history,
+            {
+              account: selectedAccount,
+              amount: inputValue1,
+              category: "updated title",
+              createdOn: new Date(), //serverTimestamp() is not supported in arrays
+              transType: transType,
+            },
+          ],
+        });
       });
-      // await updateDoc(doc(db, user.uid, "transactionsHistory"), {
-      //   title: {two:"updated title",one:"uyftf"},
-      // });
-    });
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-  rerendering();
-};
-
-document.querySelector("#incomeBtn").addEventListener("click", transactionFun);
-document.querySelector("#expenseBtn").addEventListener("click", async () => {
-  let inputValue1 = Number(document.querySelector("#inputAmount").value);
-
-  const selectedAccount = document.querySelector("#typeSelect").value;
-  if (selectedAccount === "none") return alert("please select another account");
-  try {
-    await onAuthStateChanged(auth, async (user) => {
-      const data1 = await getDoc(doc(db, user.uid, selectedAccount));
-      if (data1.data().amount < inputValue1) return alert("Not enough money");
-      let newVal = (data1.data().amount -= inputValue1);
-      await updateDoc(doc(db, user.uid, selectedAccount), {
-        amount: newVal,
-      });
-    });
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-});
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+    rerendering();
+  });
+//       if (data1.data().amount < inputValue1) return alert("Not enough money");
+//       let newVal = (data1.data().amount -= inputValue1);
+//       await updateDoc(doc(db, user.uid, selectedAccount), {
+//         amount: newVal,   })})}
+// document.querySelector("#incomeBtn").addEventListener("click", transactionFun);
 
 document
   .querySelector("#createNewAccountForm")
