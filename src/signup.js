@@ -4,25 +4,51 @@ import {
   onAuthStateChanged,
   updateProfile,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+import {
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"; //CDN
+import { db } from "./firebase.js";
 //sendEmailVerification,
 
-const createUserFun = async (userEmail, userPassword,userName) => {
+const createUserFun = async (userEmail, userPassword, userName) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       userEmail,
       userPassword
     );
-    await updateProfile(auth.currentUser, { displayName: userName })
-    userAuthState();
+    await updateProfile(auth.currentUser, { displayName: userName });
+    const uid = userCredential.user.uid;
+    await setDoc(doc(db, uid, "cash"), {
+      amount: 0,
+      category: "default",
+      createdOn: serverTimestamp(),
+    });
 
-    //this will run 1 time so create accoutns here
+    await setDoc(doc(db, uid, "savings"), {
+      amount: 0,
+      category: "default",
+      createdOn: serverTimestamp(),
+    });
+
+    await setDoc(doc(db, uid, "transactionsHistory"), {
+      // userName: user.displayName,
+      amount: 0,
+      category: "default",
+      createdOn: serverTimestamp(),
+    });
+
+    // await createDefaultAccFun(userCredential.user.uid);
+    userAuthState();
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
   }
 };
 
 const userAuthState = () => {
+  //redirect user based on auth state
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log(user);
@@ -33,7 +59,7 @@ const userAuthState = () => {
     }
   });
 };
-userAuthState();
+userAuthState();//this is not working 
 
 document.querySelector("#signup-form").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -41,9 +67,33 @@ document.querySelector("#signup-form").addEventListener("submit", (e) => {
   const userEmail = document.querySelector("#signupUserEmail").value;
   const userPassword = document.querySelector("#signupUserPassword").value;
   const userName = document.querySelector("#signupUserName").value;
-  
-  
-  createUserFun(userEmail, userPassword,userName);
+
+  createUserFun(userEmail, userPassword, userName);
 });
 
-// displayName
+const createDefaultAccFun = async (uid) => {
+  try {
+    await setDoc(doc(db, uid, "cash"), {
+      amount: 0,
+      category: "default",
+      createdOn: serverTimestamp(),
+    });
+
+    await setDoc(doc(db, uid, "savings"), {
+      amount: 0,
+      category: "default",
+      createdOn: serverTimestamp(),
+    });
+
+    await setDoc(doc(db, uid, "transactionsHistory"), {
+      // userName: user.displayName,
+      amount: 0,
+      category: "default",
+      createdOn: serverTimestamp(),
+    });
+
+    // await addDoc(collection(db, user.uid), {dataObj });
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};

@@ -23,40 +23,6 @@ import {
   limit,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"; //CDN
 
-// const savePost =
-// to remove and put in signup
-(async () => {
-  try {
-    await onAuthStateChanged(auth, async (user) => {
-      // to find the ID of Logged in user
-      // console.log(user);
-      await setDoc(doc(db, user.uid, "cash"), {
-        // amount: 0,
-        category: "default",
-        createdOn: serverTimestamp(),
-      });
-
-      await setDoc(doc(db, user.uid, "savings"), {
-        amount: 0,
-        category: "default2",
-        createdOn: serverTimestamp(),
-      });
-
-      await setDoc(doc(db, user.uid, "transactionsHistory"), {
-        userName: user.displayName,
-        amount: 0,
-        category: "default",
-        createdOn: serverTimestamp(),
-      });
-
-      // await addDoc(collection(db, user.uid), {dataObj });
-    });
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-})();
-// savePost();
-
 const transactionFun = async () => {
   let inputValue1 = Number(document.querySelector("#inputAmount").value);
 
@@ -85,7 +51,8 @@ document.querySelector("#expenseBtn").addEventListener("click", () => {
 
 document.querySelector("#incomeBtn").addEventListener("click", transactionFun);
 
-// collection("jqHzNEBa5XYrz8ZGChwllO0iB4a2")
+const datta = await collection("FbacSxZcnLSgJTqNzvXnNY2d2Xq1")
+console.log(datta);
 // .orderBy("amount", "asc")
 //createNewAccount
 document
@@ -191,4 +158,5 @@ userAuthState();
 
 /*
 notes
-we should make our collection large and document small in order to make for efficent qurrys*/
+we should make our collection large and document small in order to make for efficent qurrys
+*/
