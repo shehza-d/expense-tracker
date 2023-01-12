@@ -37,14 +37,12 @@ import {
   // .orderBy("amount", "asc")
 })();
 
-let transType = "income";
-// expense
-// income
 document
   .querySelector("#transactionForm")
   .addEventListener("submit", async (e) => {
     e.preventDefault();
     let inputValue1 = Number(document.querySelector("#inputAmount").value);
+    const transType= document.querySelector('input[name="transType"]:checked').value;
 
     const selectedAccount = document.querySelector("#typeSelect").value;
     if (selectedAccount === "none")
@@ -66,7 +64,7 @@ document
           });
         }
         const data2 = await getDoc(doc(db, user.uid, "transactionsHistory"));
-        console.log(data2.data().history);
+        transHistoryRenderer(data2.data().history);
 
         await updateDoc(doc(db, user.uid, "transactionsHistory"), {
           history: [
@@ -133,6 +131,25 @@ const rerendering = (totalAmount, userAccData) => {
 };
 rerendering();
 
+// <tr>
+//             <th scope="row">1</th>
+//             <td>Shopping</td>
+//             <td>Meezan Bank</td>
+//             <td>10 Nov, 2021</td>
+//             <td class="redd">Rs - 1500 Pkr</td>
+// </tr>
+
+const transHistoryRenderer=(arr,i)=>{
+  document.querySelector("#idToAppendTrs");
+  
+  arr?.map((item )=>{
+    console.log(item.account);
+    console.log(item.amount);
+    // console.log(item);
+
+  })
+
+}
 // $$$$$$$$$$$$$$$$$$$$$$$$$- Local Storage Approach -$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 // let data = JSON.parse(localStorage.getItem("expenseData")) || {
