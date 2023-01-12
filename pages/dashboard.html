@@ -1,294 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="../styles/dashboard.css " />
+    <!-- bootstrap cdn -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Expense Tracker</title>
-  <link rel="stylesheet" href="../styles/dashboard.css " />
-  <!-- bootstrap cdn -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="" crossorigin="anonymous"> -->
+    <!-- <link rel="stylesheet" href="" crossorigin="anonymous"> -->
+  </head>
 
-  <!-- <link rel="stylesheet" href="" crossorigin="anonymous"> -->
-  <!-- <link rel="stylesheet" href="" crossorigin="anonymous"> -->
-</head>
+  <body>
+    <div class="section1">
+      <div class="transaction">
+        <h2>Add Transactions</h2>
+        <br />
 
-<body>
-  <div class="section1">
-    <div class="transaction">
-      <h2>Add Transactions</h2>
-      <br>
+        <!-- onsubmit="transactionFun()" -->
+        <form class="form-floating mb-3 input-group" id="transactionForm">
+          <input
+            type="number"
+            class="form-control"
+            id="inputAmount"
+            placeholder="amount"
+            required
+          />
+          <label for="floatingInput">Enter the amount </label>
 
-      <!-- onsubmit="transactionFun()" -->
-      <form class="form-floating mb-3 input-group" id="transactionForm">
-        <input type="number" class="form-control" id="inputAmount" placeholder="amount" required />
-        <label for="floatingInput">Enter the amount </label>
+          <div class="form-floating">
+            <select
+              class="form-select"
+              id="typeSelect"
+              aria-label="Floating label select example"
+            >
+              <option value="none">Select</option>
+              <option value="cash">Cash</option>
+              <option value="saving">Saving</option>
+              <option value="bank">Bank</option>
+              <option value="other">Other</option>
+            </select>
+            <label for="floatingSelectGrid">Paying from </label>
+          </div>
 
-        <div class="form-floating">
-          <select class="form-select" id="typeSelect" aria-label="Floating label select example">
-            <option value="none">Select</option>
-            <option value="cash">Cash</option>
-            <option value="saving">Saving</option>
-            <option value="bank">Bank</option>
-            <option value="other">Other</option>
-          </select>
-          <label for="floatingSelectGrid">Paying from </label>
-        </div>
-
-        <input type="radio" id="expenseBtn" value="expense" name="expense">
-        <label for="expense">expenseBtn</label>
-        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card"
+          <input
+            type="radio"
+            id="expenseBtn"
+            value="expense"
+            name="transType"
+          />
+          <label for="expense">expenseBtn</label>
+          <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card"
             viewBox="0 0 16 16">
             <path
               d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z" />
             <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z" />
           </svg><br> -->
-        <input type="radio" id="incomeBtn" value="income" name="income">
-        <label for="incomeBtn">incomeBtn</label>
-        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          <input type="radio" id="incomeBtn" value="income" name="transType" />
+          <label for="incomeBtn">incomeBtn</label>
+          <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
             class="bi bi-cloud-arrow-up" viewBox="0 0 16 16">
             <path fill-rule="evenodd"
               d="M7.646 5.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2z" />
             <path
               d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383zm.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z" />
           </svg><br> -->
-        <br><br>
-        <button type="submit" class="btn btn-outline-info shadow addBtn">
-          <b>ADD</b>
-        </button>
-      </form>
-    </div>
-
-
-    <h4>Select Category</h4>
-    <div class="seletCategoryDiv">
-      <div class="category">
-        <!-- <input class="form-check-input" > -->
-        <input class="circle " type="radio" name="home" id="category-home">
-        <label class="form-check-label" for="home">
-          Home
-        </label>
+          <br /><br />
+          <button type="submit" class="btn btn-outline-info shadow addBtn">
+            <b>ADD</b>
+          </button>
+        </form>
       </div>
 
-      <div class="category">
-        <input class="circle " type="radio" name="shopping" id="category-shopping">
-        <label class="form-check-label" for="shopping">
-          Shopping
-        </label>
+      <h4>Select Category</h4>
+      <div class="seletCategoryDiv">
+        <div class="category">
+          <!-- <input class="form-check-input" > -->
+          <input
+            class="circle"
+            type="radio"
+            name="transCategory"
+            id="category-home"
+            value="home"
+          />
+          <label class="form-check-label" for="home">Home</label>
+        </div>
+        <div class="category">
+          <input
+            class="circle"
+            type="radio"
+            name="transCategory"
+            id="category-shopping"
+            value="shopping"
+          />
+          <label class="form-check-label" for="shopping">Shopping</label>
+        </div>
+        <div class="category">
+          <input
+            class="circle"
+            type="radio"
+            name="transCategory"
+            id="category-gift"
+            value="gift"
+          />
+          <label class="form-check-label" for="gift">Gift</label>
+        </div>
+        <div class="category">
+          <input
+            class="circle"
+            type="radio"
+            name="transCategory"
+            id="category-mobile"
+            value="mobile"
+          />
+          <label class="form-check-label" for="mobile">Mobile</label>
+        </div>
+        <div class="category">
+          <input
+            class="circle"
+            type="radio"
+            name="transCategory"
+            id="category-family"
+            value="family"
+          />
+          <label class="form-check-label" for="family">Family</label>
+        </div>
+        <div class="category">
+          <input
+            class="circle"
+            type="radio"
+            name="transCategory"
+            id="category-other"
+            value="other"
+          />
+          <label class="form-check-label" for="other">Other</label>
+        </div>
       </div>
-      <div class="category">
-        <input class="circle " type="radio" name="gift" id="category-gift">
-        <label class="form-check-label" for="gift">
-          Gift
-        </label>
-      </div>
-      <div class="category">
-        <input class="circle " type="radio" name="mobile" id="category-mobile">
-        <label class="form-check-label" for="mobile">
-          Mobile
-        </label>
-      </div>
-      <div class="category">
-        <input class="circle " type="radio" name="family" id="category-family">
-        <label class="form-check-label" for="family">
-          Family
-        </label>
-      <!-- </div>
-      <div class="category"> -->
-        <input class="circle " type="radio" name="other" id="category-other">
-        <label class="form-check-label" for="other">
-          Other
-        </label>
-      </div>
-    </div>
 
-    <br><br><br>
-    <h4>Transactions History</h4>
-    <br>
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">No.</th>
-          <th scope="col">Category</th>
-          <th scope="col">Type</th>
-          <th scope="col">Date</th>
-          <th scope="col">Expense</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Shopping</td>
-          <td>Meezan Bank</td>
-          <td>10 Nov, 2021</td>
-          <td class="redd">Rs - 1500 Pkr</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Home</td>
-          <td>Meezan Bank</td>
-          <td>18 Nov, 2021</td>
-          <td class="redd">Rs - 1000 Pkr</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Home</td>
-          <td>Cash</td>
-          <td>8 Nov, 2021</td>
-          <td class="redd">Rs - 1000 Pkr</td>
-        </tr>
-        <tr>
-          <th scope="row">4</th>
-          <td>Money received</td>
-          <td>Cash</td>
-          <td>8 Nov, 2021</td>
-          <td class="greenn">Rs 11,000 Pkr</td>
-        </tr>
-        <tr>
-          <th scope="row">5</th>
-          <td>Money received</td>
-          <td>Gift</td>
-          <td>3 Nov, 2021</td>
-          <td class="greenn">Rs 2,000 Pkr</td>
-        </tr>
-      </tbody>
-    </table>
-
-  </div>
-
-
-
-
-  <div class="section2">
-
-    <div class="userIcon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-person"
-        viewBox="0 0 16 16">
-        <path
-          d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
-      </svg>
-      <button id="logOutBtn">LogOut</button>
-    </div>
-    <h5>What you Have Total</h5>
-    <h2>PKR <span id="amountValue"></span></h2>
-
-    <div class="cashDetail">
-      <div class="cashItem">
-        <span>Cash</span><br>
-        <span id="cashAmountSpan"></span>
-      </div>
-      <div class="cashItem">
-        <span>Bank</span><br>
-        <span id="bankAmountSpan"></span>
-      </div>
-      <div class="cashItem">
-        <span>Saving</span><br>
-        <span id="savingAmountSpan"></span>
-      </div>
-    </div>
-
-
-    <div class="accountDetail">
-      <!-- <div class="accountDetail-heading">
-        <span>All Account</span>
-        <button>Add more</button>
-      </div>
-      -->
-      <table class="table" id="accountTransactions">
-
+      <br /><br /><br />
+      <h4>Transactions History</h4>
+      <br />
+      <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">All Account</th>
-            <th scope="col">
-              <button class="addMoreBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">Add more</button>
-            </th>
+            <th scope="col">No.</th>
+            <th scope="col">Category</th>
+            <th scope="col">Type</th>
+            <th scope="col">Date</th>
+            <th scope="col">Expense</th>
           </tr>
         </thead>
-        <tbody id="accountNames">
+        <tbody>
           <tr>
-            <td>Cash</td>
-            <td>PRK <span id="cashAmountSpan"></span></td>
-          </tr>
-          <tr>
-            <td>Saving</td>
-            <td>PRK <span id="savingAmountSpan"></span></td>
-          </tr>
-          <!-- <tr>
+            <th scope="row">1</th>
+            <td>Shopping</td>
             <td>Meezan Bank</td>
-            <td>PKR <span id=""></span></td>
-          </tr> -->
+            <td>10 Nov, 2021</td>
+            <td class="redd">Rs - 1500 Pkr</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Home</td>
+            <td>Meezan Bank</td>
+            <td>18 Nov, 2021</td>
+            <td class="redd">Rs - 1000 Pkr</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Home</td>
+            <td>Cash</td>
+            <td>8 Nov, 2021</td>
+            <td class="redd">Rs - 1000 Pkr</td>
+          </tr>
+          <tr>
+            <th scope="row">4</th>
+            <td>Money received</td>
+            <td>Cash</td>
+            <td>8 Nov, 2021</td>
+            <td class="greenn">Rs 11,000 Pkr</td>
+          </tr>
+          <tr>
+            <th scope="row">5</th>
+            <td>Money received</td>
+            <td>Gift</td>
+            <td>3 Nov, 2021</td>
+            <td class="greenn">Rs 2,000 Pkr</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
-    <h6>Overview</h6>
-    <div style="position: relative; height:40vh; width:25vw">
-      <canvas id="myChart" height="200px" width="200px"></canvas>
-    </div>
+    <div class="section2">
+      <div class="userIcon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="26"
+          height="26"
+          fill="currentColor"
+          class="bi bi-person"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"
+          />
+        </svg>
+        <button id="logOutBtn">LogOut</button>
+      </div>
+      <h5>What you Have Total</h5>
+      <h2>PKR <span id="amountValue"></span></h2>
 
+      <div class="cashDetail">
+        <div class="cashItem">
+          <span>Cash</span><br />
+          <span id="cashAmountSpan"></span>
+        </div>
+        <div class="cashItem">
+          <span>Bank</span><br />
+          <span id="bankAmountSpan"></span>
+        </div>
+        <div class="cashItem">
+          <span>Saving</span><br />
+          <span id="savingAmountSpan"></span>
+        </div>
+      </div>
 
+      <div class="accountDetail">
+        <table class="table" id="accountTransactions">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">All Account</th>
+              <th scope="col">
+                <button
+                  class="addMoreBtn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  Add more
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="accountNames">
+            <tr>
+              <td>Cash</td>
+              <td>PRK <span id="cashAmountSpan"></span></td>
+            </tr>
+            <tr>
+              <td>Saving</td>
+              <td>PRK <span id="savingAmountSpan"></span></td>
+            </tr>
+            <!-- <tr>
+            <td>Meezan Bank</td>
+            <td>PKR <span id=""></span></td>
+          </tr> -->
+          </tbody>
+        </table>
+      </div>
 
+      <h6>Overview</h6>
+      <div style="position: relative; height: 40vh; width: 25vw">
+        <canvas id="myChart" height="200px" width="200px"></canvas>
+      </div>
 
-    <br>
-    <div class="model">
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <form id="createNewAccountForm">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Create new Account</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <p class="text-center">More account to manage more explicitly</p>
-              <div class="modal-body">
-                <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="newAccountName" placeholder="account name" required>
-                  <label for="floatingInput">Enter your account name</label>
+      <br />
+      <div class="model">
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <form id="createNewAccountForm">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Create new Account
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
                 </div>
-                <div class="form-floating">
-                  <input type="number" class="form-control" id="newAccountAmount" placeholder="amount" required>
-                  <label for="floatingPassword">Enter Amount</label>
+                <p class="text-center">
+                  More account to manage more explicitly
+                </p>
+                <div class="modal-body">
+                  <div class="form-floating mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="newAccountName"
+                      placeholder="account name"
+                      required
+                    />
+                    <label for="floatingInput">Enter your account name</label>
+                  </div>
+                  <div class="form-floating">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="newAccountAmount"
+                      placeholder="amount"
+                      required
+                    />
+                    <label for="floatingPassword">Enter Amount</label>
+                  </div>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" id="makeAccBtn" class="btn btn-primary">Create Account</button>
-              </div>
-            </form>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" id="makeAccBtn" class="btn btn-primary">
+                    Create Account
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-
-
-  </div>
-  <script type="module" src="../src/dashboard.js"></script>
-  <!-- Chart JS CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.1/chart.umd.js"></script>
-  <!-- Chart JS for Expence Pie Chart -->
-  <script>
-    const ctx = document.getElementById('myChart');
-
-    new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Income', 'Expense'],
-        datasets: [{
-          label: '# of Votes',
-          data: [19, 12],
-          borderWidth: 1
-        }]
-      },
-    });
-  </script>
-  <!-- bootstrap cdn -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-    crossorigin="anonymous"></script>
-</body>
-
+    <script type="module" src="../src/dashboard.js"></script>
+    <!-- Chart JS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.1/chart.umd.js"></script>
+    <!-- bootstrap cdn -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

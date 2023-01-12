@@ -201,3 +201,19 @@ const userAuthState = async () => {
   });
 };
 userAuthState();
+
+// <!-- Chart JS for Expence Pie Chart -->
+const ctx = document.getElementById("myChart");
+new Chart(ctx, {
+  type: "doughnut",
+  data: {
+    labels: ["Income", "Expense"],
+    datasets: [
+      {
+        label: "# of Votes",
+        data: [19, 12],
+        borderWidth: 1,
+      },
+    ],
+  },
+});
