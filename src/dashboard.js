@@ -66,25 +66,26 @@ const transactionFun = async () => {
 };
 // transactionFun()
 
-document.querySelector("#expenseBtn").addEventListener("click", async () => {
-  let inputValue1 = Number(document.querySelector("#inputAmount").value);
+// document.querySelector("#expenseBtn").addEventListener("click", async () => {
+//   let inputValue1 = Number(document.querySelector("#inputAmount").value);
 
-  const selectedAccount = document.querySelector("#typeSelect").value;
-  if (selectedAccount === "none") return alert("please select another account");
-  try {
-    await onAuthStateChanged(auth, async (user) => {
-      const data1 = await getDoc(doc(db, user.uid, selectedAccount));
-      if (data1.data().amount) inputValue1 += data1.data().amount;
-      await updateDoc(doc(db, user.uid, selectedAccount), {
-        amount: inputValue1,
-      });
-    });
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
+//   const selectedAccount = document.querySelector("#typeSelect").value;
+//   if (selectedAccount === "none") return alert("please select another account");
+//   try {
+//     await onAuthStateChanged(auth, async (user) => {
+//       const data1 = await getDoc(doc(db, user.uid, selectedAccount));
+//       if (data1.data().amount < inputValue1) console.log("no money");
+//       if (data1.data().amount) inputValue1 -= data1.data().amount;
+//       await updateDoc(doc(db, user.uid, selectedAccount), {
+//         amount: inputValue1,
+//       });
+//     });
+//   } catch (e) {
+//     console.error("Error adding document: ", e);
+//   }
 
-  // rerendering(); /////
-});
+//   // rerendering(); /////
+// });
 
 document.querySelector("#incomeBtn").addEventListener("click", transactionFun);
 
