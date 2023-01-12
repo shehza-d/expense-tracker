@@ -23,6 +23,28 @@ import {
   limit,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"; //CDN
 
+(async () => {
+  // get all collection data Realtime
+  await onSnapshot(
+    collection(db, "FbacSxZcnLSgJTqNzvXnNY2d2Xq1"),
+    (myDataSnapShot) => {
+      let userAccData = [];
+      myDataSnapShot.docs.forEach((doc) =>
+        userAccData.push({ ...doc.data(), id: doc.id })
+      );
+      console.log(userAccData);
+      let totalAmount = 0;
+      console.log(totalAmount);
+      userAccData?.forEach((item) => (totalAmount += item.amount));
+      rerendering(totalAmount, userAccData);
+    }
+  );
+  // .orderBy("amount", "asc")
+  //createNewAccount
+})();
+
+// console.log(userAccData.length);
+
 const transactionFun = async () => {
   let inputValue1 = Number(document.querySelector("#inputAmount").value);
 
@@ -39,22 +61,33 @@ const transactionFun = async () => {
   } catch (e) {
     console.error("Error adding document: ", e);
   }
-
-  // rerendering();
+  rerendering();
   // console.log(data); ///////
 };
 // transactionFun()
 
-document.querySelector("#expenseBtn").addEventListener("click", () => {
-  rerendering(); /////
+document.querySelector("#expenseBtn").addEventListener("click", async () => {
+  let inputValue1 = Number(document.querySelector("#inputAmount").value);
+
+  const selectedAccount = document.querySelector("#typeSelect").value;
+  if (selectedAccount === "none") return alert("please select another account");
+  try {
+    await onAuthStateChanged(auth, async (user) => {
+      const data1 = await getDoc(doc(db, user.uid, selectedAccount));
+      if (data1.data().amount) inputValue1 += data1.data().amount;
+      await updateDoc(doc(db, user.uid, selectedAccount), {
+        amount: inputValue1,
+      });
+    });
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+
+  // rerendering(); /////
 });
 
 document.querySelector("#incomeBtn").addEventListener("click", transactionFun);
 
-const datta = await collection("FbacSxZcnLSgJTqNzvXnNY2d2Xq1")
-console.log(datta);
-// .orderBy("amount", "asc")
-//createNewAccount
 document
   .querySelector("#createNewAccountForm")
   .addEventListener("submit", async (e) => {
@@ -118,13 +151,24 @@ document
 // $$$$$$$$$$$$$$$$$$$$$$$$$- Local Storage Approach -$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 //re-rendering to update data
-// const rerendering = () => {
-// document.querySelector("#cashAmountSpan").innerHTML = data.accounts.cash;
-// document.querySelector("#savingAmountSpan").innerHTML = data.accounts.saving;
-// document.querySelector("#bankAmountSpan").innerHTML = data.accounts.bank;
-// document.querySelector("#amountValue").innerHTML = data.totalAmount;
-// };
-// rerendering();
+const rerendering = (totalAmount, userAccData) => {
+  // let totalAmount;
+  let cashAmo;
+  let savingAmo;
+  let bankAmo;
+
+  userAccData?.forEach((item) => {
+    if (item.id === "cash") cashAmo = item.amount;
+    if (item.id === "saving") savingAmo = item.amount;
+    if (item.id === "bank") bankAmo = item.amount;
+  });
+
+  document.querySelector("#amountValue").innerHTML = totalAmount || 0;
+  document.querySelector("#cashAmountSpan").innerHTML = cashAmo || 0;
+  document.querySelector("#savingAmountSpan").innerHTML = savingAmo || 0;
+  document.querySelector("#bankAmountSpan").innerHTML = bankAmo || 0;
+};
+rerendering();
 
 //LOG-OUT System
 document.querySelector("#logOutBtn").addEventListener("click", async () => {

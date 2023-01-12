@@ -27,12 +27,20 @@ const createUserFun = async (userEmail, userPassword, userName) => {
       createdOn: serverTimestamp(),
     });
 
-    await setDoc(doc(db, uid, "savings"), {
+    await setDoc(doc(db, uid, "saving"), {
       amount: 0,
       category: "default",
       createdOn: serverTimestamp(),
     });
-
+    await setDoc(doc(db, uid, "bank"), {
+      amount: 0,
+      category: "default",
+      createdOn: serverTimestamp(),
+    });
+    await setDoc(doc(db, uid, "other"), {
+      amount: 0,
+      createdOn: serverTimestamp(),
+    });
     await setDoc(doc(db, uid, "transactionsHistory"), {
       // userName: user.displayName,
       amount: 0,
@@ -79,7 +87,7 @@ const createDefaultAccFun = async (uid) => {
       createdOn: serverTimestamp(),
     });
 
-    await setDoc(doc(db, uid, "savings"), {
+    await setDoc(doc(db, uid, "saving"), {
       amount: 0,
       category: "default",
       createdOn: serverTimestamp(),
