@@ -42,7 +42,9 @@ document
   .addEventListener("submit", async (e) => {
     e.preventDefault();
     let inputValue1 = Number(document.querySelector("#inputAmount").value);
-    const transType= document.querySelector('input[name="transType"]:checked').value;
+    const transType = document.querySelector(
+      'input[name="transType"]:checked'
+    ).value;
 
     const selectedAccount = document.querySelector("#typeSelect").value;
     if (selectedAccount === "none")
@@ -139,17 +141,32 @@ rerendering();
 //             <td class="redd">Rs - 1500 Pkr</td>
 // </tr>
 
-const transHistoryRenderer=(arr,i)=>{
-  document.querySelector("#idToAppendTrs");
-  
-  arr?.map((item )=>{
-    console.log(item.account);
-    console.log(item.amount);
-    // console.log(item);
+const transHistoryRenderer = (arr, i) => {
+  const table = document.querySelector("#transHistoryTable");
 
-  })
-
-}
+  arr?.map((item, i) => {
+    const tr = document.createElement("tr");
+    const th = document.createElement("th");
+    th.appendChild(document.createTextNode(`${i + 1}`));
+    tr.appendChild(th);
+    const td1 = document.createElement("td");
+    td1.appendChild(document.createTextNode(item.category));
+    const td2 = document.createElement("td");
+    td2.appendChild(document.createTextNode(item.transType));
+    const td3 = document.createElement("td");
+    td3.appendChild(document.createTextNode("13 Jan 2023"));
+    const td4 = document.createElement("td");
+    td4.appendChild(document.createTextNode(item.amount));
+    tr.appendChild(td1);
+    tr.appendChild(td2)
+    tr.appendChild(td3)
+    tr.appendChild(td4)
+    table.appendChild(tr);
+    // console.log(item.account);
+    // console.log(item.amount);
+    console.log(new Date(item));
+  });
+};
 // $$$$$$$$$$$$$$$$$$$$$$$$$- Local Storage Approach -$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 // let data = JSON.parse(localStorage.getItem("expenseData")) || {
