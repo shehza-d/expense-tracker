@@ -8,6 +8,7 @@ import {
 import {
   collection,
   getDoc,
+  query,
   doc,
   addDoc,
   onSnapshot,
@@ -16,19 +17,33 @@ import {
   updateDoc,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"; //CDN
 
+let userID;
+
+// (async () => {
+//   await onAuthStateChanged(auth, async (user) => {
+//     userID = user.uid;
+//   });
+// })();// how to stop execution of code below this before
+
 (async () => {
   // get all collection data Realtime
   try {
     await onAuthStateChanged(auth, async (user) => {
-      await onSnapshot(collection(db, user.uid), (myDataSnapShot) => {
+      userID = user.uid;
+      await onSnapshot(collection(db, userID), async (myDataSnapShot) => {
         let userAccData = [];
         myDataSnapShot.docs.forEach((doc) =>
           userAccData.push({ ...doc.data(), id: doc.id })
         );
         let totalAmount = 0;
-        // console.log(totalAmount);
-        userAccData?.forEach((item) => (totalAmount += item.amount));
+        userAccData?.forEach((item) => {
+          if (typeof item.amount == "number") {
+            totalAmount += item.amount;
+          }
+        });
         rerendering(totalAmount, userAccData);
+        const data2 = await getDoc(doc(db, userID, "transactionsHistory"));
+        transHistoryRenderer(data2.data().history);
       });
     });
   } catch (err) {
@@ -74,7 +89,7 @@ document
             {
               account: selectedAccount,
               amount: inputValue1,
-              category: "updated title",
+              category: "Category..",
               createdOn: new Date(), //serverTimestamp() is not supported in arrays
               transType: transType,
             },
@@ -97,14 +112,13 @@ document
   .addEventListener("submit", async (e) => {
     e.preventDefault();
     const newAccountName = document.querySelector("#newAccountName").value;
-    const newAccountAmount = Number(
-      document.querySelector("#newAccountAmount").value
-    );
+    const newAccountAmount =
+      Number(document.querySelector("#newAccountAmount").value) || 0;
 
     try {
       await onAuthStateChanged(auth, async (user) => {
         await setDoc(doc(db, user.uid, newAccountName), {
-          amount: newAccountAmount,
+          amount: newAccountAmount || 0,
           category: "default",
           createdOn: serverTimestamp(),
         });
@@ -144,7 +158,7 @@ rerendering();
 const transHistoryRenderer = (arr, i) => {
   const table = document.querySelector("#transHistoryTable");
 
-  arr?.map((item, i) => {
+  arr?.forEach((item, i) => {
     const tr = document.createElement("tr");
     const th = document.createElement("th");
     th.appendChild(document.createTextNode(`${i + 1}`));
@@ -156,17 +170,39 @@ const transHistoryRenderer = (arr, i) => {
     const td3 = document.createElement("td");
     td3.appendChild(document.createTextNode("13 Jan 2023"));
     const td4 = document.createElement("td");
-    td4.appendChild(document.createTextNode(item.amount));
+    td4.appendChild(document.createTextNode(`Rs ${item.amount} PKR`));
     tr.appendChild(td1);
-    tr.appendChild(td2)
-    tr.appendChild(td3)
-    tr.appendChild(td4)
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    tr.appendChild(td4);
     table.appendChild(tr);
     // console.log(item.account);
     // console.log(item.amount);
-    console.log(new Date(item));
+    // console.log(new Date(item));
   });
 };
+
+const renderAllAcc = async () => {
+  // const q = query(
+  //   collection(db, "collectionName"),
+  //   where("author", "==", "Shehzad"),
+  //   orderBy("userName", "desc")
+  // ); //orderBy("createdAt")
+  await onAuthStateChanged(auth, async (user) => {
+    await onSnapshot(collection(db, user.uid), (myDataSnapShot) => {
+      //we can also pass in query reference here instead of collection reference to only bring queried items
+      let allAccData = [];
+      myDataSnapShot.docs.forEach((doc) => {
+        allAccData.push({ ...doc.data(), id: doc.id });
+      });
+      // console.log(allAccData);
+
+      // allAccData.forEach(() => console.log(allAccData.id, allAccData.amount));
+      allAccData.forEach((dd) => console.log(dd.id, dd.amount));
+    });
+  });
+};
+renderAllAcc();
 // $$$$$$$$$$$$$$$$$$$$$$$$$- Local Storage Approach -$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 // let data = JSON.parse(localStorage.getItem("expenseData")) || {
