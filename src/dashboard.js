@@ -184,6 +184,7 @@ const transHistoryRenderer = (arr, i) => {
 
 const renderAllAcc = async () => {
   const table = document.querySelector("#accountNames");
+  const selectDropDown = document.querySelector("#typeSelect");
   await onAuthStateChanged(auth, async (user) => {
     await onSnapshot(collection(db, user.uid), (myDataSnapShot) => {
       // let table = document.querySelector("#accountNames").innerHTML=null
@@ -192,6 +193,8 @@ const renderAllAcc = async () => {
         allAccData.push({ ...doc.data(), id: doc.id });
       });
       table.innerHTML = null;
+      selectDropDown.innerHTML = null;
+
       allAccData.forEach((item) => {
         if (item.id && item.amount) {
           String(item.id);
@@ -205,6 +208,9 @@ const renderAllAcc = async () => {
           tr.appendChild(td2);
           table.appendChild(tr);
           console.log(item.id, item.amount);
+          const optionDropDown = document.createElement("option");
+          optionDropDown.appendChild(document.createTextNode(item.id));
+          selectDropDown.appendChild(optionDropDown);
         }
       });
     });
