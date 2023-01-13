@@ -183,22 +183,30 @@ const transHistoryRenderer = (arr, i) => {
 };
 
 const renderAllAcc = async () => {
-  // const q = query(
-  //   collection(db, "collectionName"),
-  //   where("author", "==", "Shehzad"),
-  //   orderBy("userName", "desc")
-  // ); //orderBy("createdAt")
+  const table = document.querySelector("#accountNames");
   await onAuthStateChanged(auth, async (user) => {
     await onSnapshot(collection(db, user.uid), (myDataSnapShot) => {
-      //we can also pass in query reference here instead of collection reference to only bring queried items
+      // let table = document.querySelector("#accountNames").innerHTML=null
       let allAccData = [];
       myDataSnapShot.docs.forEach((doc) => {
         allAccData.push({ ...doc.data(), id: doc.id });
       });
-      // console.log(allAccData);
-
-      // allAccData.forEach(() => console.log(allAccData.id, allAccData.amount));
-      allAccData.forEach((dd) => console.log(dd.id, dd.amount));
+      table.innerHTML = null;
+      allAccData.forEach((item) => {
+        if (item.id && item.amount) {
+          String(item.id);
+          Number(item.amount);
+          const tr = document.createElement("tr");
+          const td1 = document.createElement("td");
+          td1.appendChild(document.createTextNode(item.id));
+          const td2 = document.createElement("td");
+          td2.appendChild(document.createTextNode(`PKR ${item.amount}`));
+          tr.appendChild(td1);
+          tr.appendChild(td2);
+          table.appendChild(tr);
+          console.log(item.id, item.amount);
+        }
+      });
     });
   });
 };
