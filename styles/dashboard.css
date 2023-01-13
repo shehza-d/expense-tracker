@@ -23,11 +23,11 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 10px;
 }
 .circle {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   background-color: rgb(155, 154, 154);
   border-radius: 50px;
 }
@@ -95,4 +95,17 @@ body {
   border: 0.4px solid;
   padding: 5px;
   border-radius: 10px;
+}
+
+.radioDiv{
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.radioDiv>input{
+  padding: 10px;
+  width: 20px;
+  height: 20px;
+  margin: 10px;
 }
